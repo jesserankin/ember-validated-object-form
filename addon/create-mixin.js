@@ -5,8 +5,46 @@ import Ember from 'ember';
 export default function(bindEvent, unbindEvent) {
 
   return Ember.Mixin.create({
+    keyboardShortcutsService: Ember.inject.service('keyboard-shortcuts'),
+    keyboardShortcutsPriority: 0,
 
-    bindShortcuts: Ember.on(bindEvent, function() {
+    setupShortcuts: Ember.on(bindEvent, function() {
+      var service = this.get('keyboardShortcutsService');
+      var priority = this.get('keyboardShortcutsPriority');
+      this.keyboardShortcutsBound = false;
+
+      this.keyboardShortcutsRegistered = true;
+      service.registerListener(this, priority);
+    }),
+
+    teardownShortcuts: Ember.on(unbindEvent, function() {
+      if (this.keyboardShortcutsBound) {
+        this.unbindShortcuts();
+      }
+      this.keyboardShortcutsRegistered = false;
+      this.get('keyboardShortcutsService').unregisterListener(this);
+    }),
+
+    updatePriority: Ember.on('init', Ember.observer('keyboardShortcutsPriority','keyboardShortcutsService.currentPriority', function() {
+      var currentPriority = this.get('keyboardShortcutsService.currentPriority');
+      var service = this.get('keyboardShortcutsService');
+      var priority = this.get('keyboardShortcutsPriority');
+
+      if (this.keyboardShortcutsRegistered) {
+        if (currentPriority === priority) {
+          if (!this.keyboardShortcutsBound ) {
+            this.keyboardShortcutsBound = true;
+            this.bindShortcuts();
+          }
+        } else {
+          if (this.keyboardShortcutsBound) {
+            this.unbindShortcuts();
+          }
+        }
+      }
+    })),
+
+    bindShortcuts: function() {
       var self = this;
       var shortcuts = this.get('keyboardShortcuts');
 
@@ -61,14 +99,15 @@ export default function(bindEvent, unbindEvent) {
         self.mousetraps.push(mousetrap);
 
       });
+      this.keyboardShortcutsBound = true;
+    },
 
-    }),
-
-    unbindShortcuts: Ember.on(unbindEvent, function() {
+    unbindShortcuts: function() {
       this.mousetraps.forEach(
         (mousetrap) => mousetrap.reset()
       );
-    })
+      this.keyboardShortcutsBound = false;
+    }
 
   });
 
