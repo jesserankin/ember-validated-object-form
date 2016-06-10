@@ -1,0 +1,15 @@
+<div class="field{{ if inline ' inline' '' }}{{ if size (concat ' ' size) '' }}{{ validationClass }}" data-for="{{name}}">
+  <label for="{{name}}-field">
+    {{#if required }}
+      <i class="fa fa-asterisk required-marker" title="Required parameter"></i>
+    {{/if}}
+    {{label}}
+  </label>
+  {{ input id=(concat name '-field') value=(mut (get object name)) focus-out=(action "markLeft") enter=submit }}
+  {{#liquid-if validationError class="slide-down"}}
+    <div class="error">{{ validationError }}</div>
+  {{/liquid-if}}
+  {{#if description}}
+    <div class="description">{{description}}</div>
+  {{/if}}
+</div>

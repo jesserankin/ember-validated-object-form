@@ -1,0 +1,19 @@
+<div class="field{{ if inline ' inline' '' }}{{ if size (concat ' ' size) '' }}{{ validationClass }}" data-for="{{name}}">
+  <label for="{{name}}-field">
+    {{#if required }}
+      <i class="fa fa-asterisk required-marker" title="Required parameter"></i>
+    {{/if}}
+    {{label}}
+  </label>
+  <select id={{concat name '-field'}} onchange={{action (mut (get object name)) value="target.value" }} onblur={{ action "markLeft" }}>
+    {{#each-in options as |value label|}}
+      <option value={{value}} selected={{eq (get object name) value}}>{{label}}</option>
+    {{/each-in}}
+  </select>
+  {{#liquid-if validationError class="slide-down"}}
+    <div class="error">{{ validationError }}</div>
+  {{/liquid-if}}
+  {{#if description}}
+    <div class="description">{{description}}</div>
+  {{/if}}
+</div>

@@ -2,5 +2,9 @@
 'use strict';
 
 module.exports = {
-  name: 'ember-validated-object-form'
+  name: 'ember-validated-object-form',
+
+  isDevelopingAddon: function() {
+    return false;
+  }
 };

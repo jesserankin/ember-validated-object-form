@@ -1,0 +1,5 @@
+<div class="form">
+  {{ yield (hash text=(component 'fields/text-field' object=object submit=submit submitted=submitted)
+                 select=(component 'fields/select-field' object=object submit=submit submitted=submitted)
+                 checkbox=(component 'fields/checkbox-field' object=object submit=submit submitted=submitted))}}
+</div>

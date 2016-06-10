@@ -1,0 +1,15 @@
+<div class="field checkbox{{ if inline ' inline' '' }}{{ if size (concat ' ' size) '' }}{{ validationClass }}">
+  {{ input id=(concat name '-field') type="checkbox" checked=(get object name) change=(action "toggle") enter=submit }}
+  <label for="{{name}}-field">
+    {{#if required }}
+      <i class="fa fa-asterisk required-marker" title="Required parameter"></i>
+    {{/if}}
+    {{label}}
+  </label>
+  {{#liquid-if validationError class="slide-down"}}
+    <div class="error">{{ validationError }}</div>
+  {{/liquid-if}}
+  {{#if description}}
+    <div class="description">{{description}}</div>
+  {{/if}}
+</div>
