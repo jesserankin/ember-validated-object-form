@@ -5,7 +5,7 @@
     {{/if}}
     {{label}}
   </label>
-  <select id={{concat name '-field'}} onchange={{action (mut (get object name)) value="target.value" }} onblur={{ action "markLeft" }}>
+  <select id={{concat name '-field'}} name=name onchange={{action (mut (get object name)) value="target.value" }} onblur={{ action "markLeft" }}>
     {{#each-in options as |value label|}}
       <option value={{value}} selected={{eq (get object name) value}}>{{label}}</option>
     {{/each-in}}
