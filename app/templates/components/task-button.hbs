@@ -1,8 +1,12 @@
 <button {{action action}} class="{{if secondary 'secondary'}}" disabled={{if isRunning 'disabled' ''}}>
   <div class="task-button-container">
     <div class="task-button-content">
-      {{#if showStatus }}
-        <i class="fa fa-circle-o-notch fa-spin"></i> {{ status }}
+      {{#if isRunning }}
+        {{#if showStatus }}
+          <i class="fa fa-circle-o-notch fa-spin"></i> {{ status }}
+        {{ else }}
+          {{ origText }}
+        {{/if}}
       {{ else }}
         {{ yield }}
       {{/if}}
