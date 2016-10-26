@@ -5,7 +5,7 @@
     {{/if}}
     {{label}}
   </label>
-  {{ textarea id=(concat name '-field') name=name value=(mut (get object name)) focus-out=(action "markLeft") enter=submit }}
+  {{ textarea id=(concat name '-field') name=name value=(mut (get object name)) focus-out=(action "markLeft") }}
   {{#liquid-if validationError class="slide-down"}}
     <div class="error">{{ validationError }}</div>
   {{/liquid-if}}
