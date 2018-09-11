@@ -1,10 +1,14 @@
 <div class="field{{ if inline ' inline' '' }}{{ if size (concat ' ' size) '' }}{{ validationClass }}" data-for="{{name}}">
-  <label for="{{name}}-field">
-    {{#if required }}
-      <i class="fa fa-asterisk required-marker" title="Required parameter"></i>
-    {{/if}}
-    {{label}}
-  </label>
+
+  {{#if label}}
+    <label for="{{name}}-field">
+      {{#if required }}
+        <i class="fa fa-asterisk required-marker" title="Required parameter"></i>
+      {{/if}}
+      {{label}}
+    </label>
+  {{/if}}
+
   {{ textarea id=(concat name '-field') name=name value=(mut (get object name)) focus-out=(action "markLeft") }}
   {{#liquid-if validationError class="slide-down"}}
     <div class="error">{{ validationError }}</div>

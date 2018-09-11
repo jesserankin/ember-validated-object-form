@@ -1,10 +1,14 @@
 <div class="field{{ if inline ' inline' '' }}{{ if size (concat ' ' size) '' }}{{ validationClass }}" data-for="{{name}}">
-  <label for="{{name}}-field">
-    {{#if required }}
-      <i class="fa fa-asterisk required-marker" title="Required parameter"></i>
-    {{/if}}
-    {{label}}
-  </label>
+
+  {{#if label}}
+    <label for="{{name}}-field">
+      {{#if required }}
+        <i class="fa fa-asterisk required-marker" title="Required parameter"></i>
+      {{/if}}
+      {{label}}
+    </label>
+  {{/if}}
+
   <select id={{concat name '-field'}} name=name onchange={{action (mut (get object name)) value="target.value" }} onblur={{ action "markLeft" }}>
     {{#each-in options as |value label|}}
       <option value={{value}} selected={{eq (get object name) value}}>{{label}}</option>
