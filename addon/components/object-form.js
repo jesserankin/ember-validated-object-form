@@ -4,8 +4,10 @@ import { scheduleOnce } from '@ember/runloop';
 export default Component.extend({
   init() {
     this._super(...arguments);
-    scheduleOnce('afterRender', this, function() {
-      this.$('input,textarea,select').first().focus();
-    });
-  }
+    if (!this.get('noFocus')) {
+      scheduleOnce('afterRender', this, function() {
+        this.$('input,textarea,select').first().focus();
+      });
+    }
+  },
 });
