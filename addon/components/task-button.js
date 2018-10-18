@@ -1,8 +1,8 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed, observer } from '@ember/object';
+import { scheduleOnce, later } from '@ember/runloop';
 
-const { computed } = Ember;
-
-export default Ember.Component.extend({
+export default Component.extend({
 
   classNames: ['task-button'],
   classNameBindings: ['inline'],
@@ -22,13 +22,14 @@ export default Ember.Component.extend({
     }
   }),
 
-  fixButtonWidth: Ember.on('init', function() {
-      this.updateButtonWidth();
-      this.set('origText', this.get('text'));
-  }),
+  init() {
+    this._super(...arguments);
+    this.updateButtonWidth();
+    this.set('origText', this.get('text'));
+  },
 
   updateButtonWidth: function() {
-    Ember.run.scheduleOnce('afterRender', this, function() {
+    scheduleOnce('afterRender', this, function() {
       const container = this.$('.task-button-container');
       const content = this.$('.task-button-content');
       if (container && content && content.outerWidth() > 0) {
@@ -37,10 +38,10 @@ export default Ember.Component.extend({
     });
   },
 
-  setShowStatus: Ember.observer('isRunning', function() {
+  setShowStatus: observer('isRunning', function() {
     if (this.get('isRunning')) {
       this.set('origText', this.$().text());
-      Ember.run.later(this, function() {
+      later(this, function() {
         if (this.get('isRunning')) {
           this.set('showStatus', true);
           this.updateButtonWidth();

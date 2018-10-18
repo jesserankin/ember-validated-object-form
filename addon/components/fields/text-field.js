@@ -1,21 +1,21 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { computed, defineProperty } from '@ember/object';
 
-const { computed } = Ember;
-
-export default Ember.Component.extend({
+export default Component.extend({
 
   validations: computed.alias('object.validations.attrs'),
   wasBlurred: false,
 
   // setup validator computed property based on the name passed into this field
-  setupValidator: Ember.on('init', function() {
+  init() {
+    this._super(...arguments);
     const name = this.get('name');
-    Ember.defineProperty(this, 'validator', computed('validations','validations.'+name, function() {
+    defineProperty(this, 'validator', computed('validations','validations.'+name, function() {
       if (this.get('validations')) {
         return this.get('validations').get(this.get('name'));
       }
     }));
-  }),
+  },
 
   validated: computed('validator','validator.{isValidating}','submitted', 'wasBlurred', function() {
     if (this.get('validator')) {

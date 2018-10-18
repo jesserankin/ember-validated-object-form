@@ -1,10 +1,11 @@
-import Ember from 'ember';
+import Component from '@ember/component';
+import { scheduleOnce } from '@ember/runloop';
 
-export default Ember.Component.extend({
-
-  focusFirstField: Ember.on('init', function() {
-    Ember.run.scheduleOnce('afterRender', this, function() {
+export default Component.extend({
+  init() {
+    this._super(...arguments);
+    scheduleOnce('afterRender', this, function() {
       this.$('input,textarea,select').first().focus();
     });
-  })
+  }
 });
