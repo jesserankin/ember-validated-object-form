@@ -4,7 +4,6 @@ import { computed, defineProperty } from '@ember/object';
 export default Component.extend({
 
   validations: computed.alias('object.validations.attrs'),
-  wasBlurred: false,
 
   // setup validator computed property based on the name passed into this field
   init() {
@@ -38,10 +37,15 @@ export default Component.extend({
     }
   }),
 
+  wasBlurred: computed('blurredFields', function() {
+    const name = this.get('name');
+    return this.get('blurredFields').includes(name);
+  }),
+
   actions: {
-    markLeft: function() {
-      this.set('wasBlurred', true);
-    }
-  }
+    markFocused: function() {
+      this.get('onFocus')(this.get('name'));
+    },
+  },
 
 });

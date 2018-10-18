@@ -6,6 +6,7 @@ export default FormField.extend({
       const path = 'object.' + this.get('name');
       const val = this.get(path);
       this.set(path, !val);
+      this.get('onFocus')(this.get('name'));
     }
   }
 });

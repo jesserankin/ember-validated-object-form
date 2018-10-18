@@ -9,7 +9,7 @@
     </label>
   {{/if}}
 
-  <select id={{concat name '-field'}} name=name onchange={{action (mut (get object name)) value="target.value" }} onblur={{ action "markLeft" }}>
+  <select id={{concat name '-field'}} name=name onchange={{action (mut (get object name)) value="target.value" }} onfocus={{ action "markFocused" }}>
     {{#each-in options as |value label|}}
       <option value={{value}} selected={{eq (get object name) value}}>{{label}}</option>
     {{/each-in}}

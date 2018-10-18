@@ -2,6 +2,10 @@ import Component from '@ember/component';
 import { scheduleOnce } from '@ember/runloop';
 
 export default Component.extend({
+
+  currentFocus: null,
+  blurredFields: [],
+
   init() {
     this._super(...arguments);
     if (!this.get('noFocus')) {
@@ -10,4 +14,14 @@ export default Component.extend({
       });
     }
   },
+
+  actions: {
+    markFieldFocused: function(name) {
+      if (this.get('currentFocus')) {
+        this.set('blurredFields', this.get('blurredFields').concat([this.get('currentFocus')]).uniq());
+      }
+      this.set('currentFocus', name);
+    },
+  },
+
 });
