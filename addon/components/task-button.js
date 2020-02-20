@@ -1,6 +1,7 @@
 import Component from '@ember/component';
 import { computed, observer } from '@ember/object';
 import { scheduleOnce, later } from '@ember/runloop';
+import $ from 'jquery';
 
 export default Component.extend({
 
@@ -30,8 +31,8 @@ export default Component.extend({
 
   updateButtonWidth: function() {
     scheduleOnce('afterRender', this, function() {
-      const container = this.$('.task-button-container');
-      const content = this.$('.task-button-content');
+      const container = $(this.element).find('.task-button-container');
+      const content = $(this.element).find('.task-button-content');
       if (container && content && content.outerWidth() > 0) {
         container.css('width', content.outerWidth() + 'px');
       }
@@ -40,7 +41,7 @@ export default Component.extend({
 
   setShowStatus: observer('isRunning', function() {
     if (this.get('isRunning')) {
-      this.set('origText', this.$().text());
+      this.set('origText', $(this.element).text());
       later(this, function() {
         if (this.get('isRunning')) {
           this.set('showStatus', true);
